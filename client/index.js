@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "./style/style.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,11 +17,11 @@ import { ApolloProvider } from "react-apollo";
 import SongList from "./components/SongList";
 import App from "./components/App";
 import SongCreate from "./components/SongCreate";
+
 const client = new ApolloClient({
   link: new HttpLink({
     uri: "http://localhost:4000/graphql"
-  }),
-  cache: new InMemoryCache()
+  })
 });
 const Root = () => {
   return (

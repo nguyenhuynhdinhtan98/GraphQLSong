@@ -3,12 +3,21 @@ import gql from "graphql-tag";
 import { compose, graphql } from "react-apollo";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import query from "../query/fetchSong";
 class SongList extends Component {
+  onSongDelete(id) {
+    this.props
+      .mutate({ variables: { id } })
+      .then(() => this.props.data.refetch());
+  }
   getData() {
     return this.props.data.songs.map(({ id, title }) => {
       return (
         <li className="list-group-item" key={id}>
-          {title}
+          <Link>{title}</Link>
+          <i className="material-icons" onClick={() => this.onSongDelete(id)}>
+            delete
+          </i>
         </li>
       );
     });
@@ -31,16 +40,12 @@ class SongList extends Component {
     );
   }
 }
-const querySong = gql`
-  {
-    songs {
+const mutation = gql`
+  mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
       id
-      title
-      lyrics {
-        content
-      }
     }
   }
 `;
 
-export default graphql(querySong)(SongList);
+export default graphql(mutation)(graphql(query)(SongList));
