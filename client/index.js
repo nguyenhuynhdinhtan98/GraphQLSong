@@ -17,12 +17,10 @@ import { ApolloProvider } from "react-apollo";
 import SongList from "./components/SongList";
 import App from "./components/App";
 import SongCreate from "./components/SongCreate";
+import SongDetail from "./components/SongDetail";
 
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: "http://localhost:4000/graphql"
-  })
-});
+const client = new ApolloClient({ dataIdFromObject: o => o.id });
+
 const Root = () => {
   return (
     <ApolloProvider client={client}>
@@ -31,6 +29,7 @@ const Root = () => {
           <App>
             <Route exact path="/" component={SongList} />
             <Route path="/song/create" component={SongCreate} />
+            <Route path="/song/detail/:id" component={SongDetail} />
           </App>
         </Switch>
       </HashRouter>

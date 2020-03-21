@@ -1,10 +1,8 @@
 import gql from "graphql-tag";
-
 export default gql`
-  {
-    songs {
+  mutation AddLyric($content: String, $songID: ID) {
+    addLyricToSong(content: $content, songId: $songID) {
       id
-      title
       lyrics {
         content
       }
